@@ -1,0 +1,12 @@
+import math
+
+a = float(input("Введіть катет a: 3.0 "))
+b = float(input("Введіть катет b: 4.0 "))
+expected_c = float(input("Введіть очікувану гіпотенузу expected_c: 5 "))
+
+c = math.hypot(a, b)  # або math.sqrt(a**2 + b**2)
+perimeter = a + b + c
+
+is_equal = math.isclose(c, expected_c, abs_tol=1e-6) 
+
+print(f"Гіпотенуза: {c}, Периметр: {perimeter}, Збігається: {is_equal}")
