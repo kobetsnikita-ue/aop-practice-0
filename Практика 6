@@ -1,0 +1,51 @@
+Задача 6.1. Посимвольний аналіз та класифікація рядка за ASCII без методів .is*()
+text = input("Введіть рядок: ")
+
+digits = 0
+upper_letters = 0
+lower_letters = 0
+spaces = 0
+others = 0
+
+for char in text:
+    code = ord(char)
+    if 48 <= code <= 57:  # або '0' <= char <= '9'
+        digits += 1
+    elif 65 <= code <= 90:  # або 'A' <= char <= 'Z'
+        upper_letters += 1
+    elif 97 <= code <= 122:  # або 'a' <= char <= 'z'
+        lower_letters += 1
+    elif code == 32:
+        spaces += 1
+    else:
+        others += 1
+
+print(f"Цифр: {digits}")
+print(f"Великих літер: {upper_letters}")
+print(f"Малих літер: {lower_letters}")
+print(f"Пробілів: {spaces}")
+print(f"Інших символів: {others}")
+
+Задача 6.2. Перевірка рядка на паліндром без урахування регістру через ASCII
+
+text = input("Введіть рядок: ")
+normalized = ""
+
+for char in text:
+    code = ord(char)
+    if 65 <= code <= 90:
+        normalized += chr(code + 32)
+    else:
+        normalized += char
+
+is_palindrome = True
+n = len(normalized)
+for i in range(n // 2):
+    if normalized[i] != normalized[n - 1 - i]:
+        is_palindrome = False
+        break
+
+if is_palindrome:
+    print("Рядок є паліндромом")
+else:
+    print("Рядок не є паліндромом")
