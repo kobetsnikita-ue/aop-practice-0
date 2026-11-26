@@ -1,0 +1,13 @@
+def digital_root(n):
+    n = abs(n)
+
+    if n < 10:
+        return n
+
+    digits_sum = sum(int(digit) for digit in str(n))
+
+    return digital_root(digits_sum)
+
+number = 9875
+result = digital_root(number)
+print(f"Цифровий корінь: {result}")
