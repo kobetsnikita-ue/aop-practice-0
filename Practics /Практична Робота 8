@@ -1,0 +1,67 @@
+# Завдання 8.1 
+
+def analyze_stock_prices(prices: list[float], k: int) -> tuple[float, float]:
+    """
+    Знаходить максимальну суму та середнє значення цін у вікні розміру k.
+    Складність за часом: O(N), за пам'яттю: O(1).
+    """
+    n = len(prices)
+    if n < k or k <= 0:
+        raise ValueError("Некоректний розмір вікна k відносно довжини масиву")
+
+    window_sum = sum(prices[:k])
+    max_sum = window_sum
+
+    for i in range(k, n):
+        window_sum += prices[i] - prices[i - k]
+        if window_sum > max_sum:
+            max_sum = window_sum
+
+    max_avg = max_sum / k
+    return max_sum, max_avg
+
+
+prices = [100.5, 102.0, 98.5, 105.0, 110.0, 108.5, 103.0]
+k = 3
+
+max_total, max_average = analyze_stock_prices(prices, k)
+print(f"Максимальна сума за {k} дн.: {max_total:.2f}")
+print(f"Максимальна середня ціна: {max_average:.2f}")
+
+# Завдання 8.2
+
+def build_prefix_sums(consumption: list[float]) -> list[float]:
+    """
+    Будує масив префіксних сум довжиною N + 1.
+    prefix[i] зберігає суму перших i елементів (від індексу 0 до i-1).
+    """
+    n = len(consumption)
+    prefix = [0.0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + consumption[i]
+    return prefix
+
+
+def get_range_consumption(prefix: list[float], left: int, right: int) -> float:
+    """
+    Повертає суму енергоспоживання на відрізку [left, right] включно (0-індексація).
+    Складність: O(1).
+    """
+    if left < 0 or right >= len(prefix) - 1 or left > right:
+        raise IndexError("Некоректні межі інтервалу [left, right]")
+    return prefix[right + 1] - prefix[left]
+
+
+hourly_energy = [1.2, 1.5, 2.3, 3.1, 2.8, 1.9, 1.4]
+
+prefix_sums = build_prefix_sums(hourly_energy)
+
+queries = [
+    (0, 2),  
+    (2, 5), 
+    (4, 4),  
+]
+
+for l, r in queries:
+    total = get_range_consumption(prefix_sums, l, r)
+    print(f"Споживання за період [{l}, {r}]: {total:.2f} кВт·год")
