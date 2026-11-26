@@ -1,0 +1,39 @@
+# Завдання 10.1 
+
+def fast_power(x: float, n: int) -> float:
+    if n < 0:
+        return 1 / fast_power(x, -n)
+
+    if n == 0:
+        return 1
+
+    half = fast_power(x, n // 2)
+    
+    if n % 2 == 0:
+        return half * half
+    else:
+        return x * half * half
+
+print(fast_power(2, 10))  # Виведе: 1024
+print(fast_power(2, -3))  # Виведе: 0.125
+
+# Завдання 10.2
+
+def generate_parentheses(n: int) -> list[str]:
+    result = []
+
+    def backtrack(current_str: str, open_count: int, close_count: int):
+        if len(current_str) == 2 * n:
+            result.append(current_str)
+            return
+
+        if open_count < n:
+            backtrack(current_str + "(", open_count + 1, close_count)
+
+        if close_count < open_count:
+            backtrack(current_str + ")", open_count, close_count + 1)
+
+    backtrack("", 0, 0)
+    return result
+
+print(generate_parentheses(3))
