@@ -1,0 +1,33 @@
+# Завдання 7.1
+
+size = 10
+
+print("    |", end="")
+for i in range(1, size + 1):
+    print(f"{i:>4}", end="")
+print("\n" + "-" * (5 + size * 4))
+
+for row in range(1, size + 1):
+    print(f"{row:>3} |", end="")
+    for col in range(1, size + 1):
+        print(f"{row * col:>4}", end="")
+    print() 
+
+
+# Завдання 7.2
+
+n = int(input("Введіть номер числа Фібоначчі (N >= 0): "))
+
+if n < 0:
+    print("Помилка: N має бути невід'ємним цілим числом.")
+elif n == 0:
+    print("0-е число Фібоначчі: 0")
+else:
+    a, b = 0, 1  
+    count = 1    
+
+    while count < n:
+        a, b = b, a + b  
+        count += 1       
+
+    print(f"{n}-е число Фібоначчі: {b}")
