@@ -1,0 +1,41 @@
+# Завдання 9.1
+
+def clean_grades(grades: list) -> list[float]:
+    return [g for g in grades if isinstance(g, (int, float)) and 0 <= g <= 100]
+
+def get_average(grades: list[float]) -> float:
+    return round(sum(grades) / len(grades), 2) if grades else 0.0
+
+def to_ects(score: float) -> str:
+    scale = [(90, "A"), (82, "B"), (74, "C"), (64, "D"), (60, "E")]
+    return next((letter for limit, letter in scale if score >= limit), "F")
+
+def analyze_grades(name: str, grades: list) -> dict:
+    valid = clean_grades(grades)
+    avg = get_average(valid)
+    return {"student": name, "avg": avg, "ects": to_ects(avg), "passed": avg >= 60}
+
+assert analyze_grades("Олена", [95, 88, 120, -5, 90]) == {"student": "Олена", "avg": 91.0, "ects": "A", "passed": True}
+assert analyze_grades("Іван", []) == {"student": "Іван", "avg": 0.0, "ects": "F", "passed": False}
+print("9.1 OK")
+
+# Завдання 9.2
+
+RATES = {"UAH": 1.0, "USD": 41.5, "EUR": 45.0}
+
+def convert_currency(amount: float, from_curr: str, to_curr: str = "UAH") -> float:
+    from_curr, to_curr = from_curr.upper(), to_curr.upper()
+
+    if not isinstance(amount, (int, float)) or amount <= 0:
+        raise ValueError("Сума має бути додатним числом")
+    if from_curr not in RATES or to_curr not in RATES:
+        raise ValueError("Невідома валюта")
+
+    if from_curr == to_curr:
+        return round(float(amount), 2)
+    return round(amount * RATES[from_curr] / RATES[to_curr], 2)
+
+assert convert_currency(100, "USD") == 4150.0
+assert convert_currency(450, "UAH", "EUR") == 10.0
+assert convert_currency(50, "EUR", "EUR") == 50.0
+print("9.2 OK")
