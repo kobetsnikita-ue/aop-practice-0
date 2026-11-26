@@ -1,0 +1,13 @@
+text = "hello"
+shift = 3
+encrypted_text = ""
+
+for char in text:
+  position = ord(char) - ord("a")
+
+  new_position = (position + shift) % 26
+
+  new_char = chr(ord("a") + new_position)
+  encrypted_text += new_char
+
+print(f'Зашифрований текст: "{encrypted_text}"')
